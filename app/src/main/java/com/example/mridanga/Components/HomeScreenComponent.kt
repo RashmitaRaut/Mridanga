@@ -8,11 +8,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Tab
@@ -63,7 +61,7 @@ fun BottomAppBarContent(){
     BottomAppBar(){
         val ctx = LocalContext.current
         val mediaPlayer = MediaPlayer()
-        
+
         Row(horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
         ) {
@@ -80,7 +78,7 @@ fun BottomAppBarContent(){
                     Toast.makeText(ctx, "Paused", Toast.LENGTH_SHORT).show()
                 }
                 else{
-                    Toast.makeText(ctx, "Not played", Toast.LENGTH_SHORT)
+                    Toast.makeText(ctx, "Not played", Toast.LENGTH_SHORT).show()
                 }
 
             }) {
@@ -128,27 +126,28 @@ fun BottomAppBarContent(){
                     Toast.makeText(ctx, "Stopped", Toast.LENGTH_SHORT).show()
                 }
                 else{
-                    Toast.makeText(ctx, "Not stopped", Toast.LENGTH_SHORT)
+                    Toast.makeText(ctx, "Not stopped", Toast.LENGTH_SHORT).show()
                 }
 
             }) {
-                Icon(painter = painterResource(id = R.drawable.pause_button),
+                Icon(painter = painterResource(id = R.drawable.stop_button),
                     contentDescription = "Stop Button",
                     modifier = Modifier.size(100.dp)
                 )
             }
-            
+
             Spacer(modifier = Modifier.width(45.dp))
 
-            /*********************************Mixer Button******************************/
-
-
+            /******************************Mixer Button******************************/
             IconButton(onClick = { /*TODO*/ }) {
                 Icon(painter = painterResource(id = R.drawable.dj_mixer),
                     contentDescription = "Mixer Button" )
             }
         }
+
         }
-        
+
     }
+
+
 

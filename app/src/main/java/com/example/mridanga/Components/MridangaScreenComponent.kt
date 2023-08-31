@@ -1,13 +1,20 @@
 package com.example.mridanga.Components
 
+import android.media.MediaPlayer
+import android.media.PlaybackParams
 import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
@@ -25,9 +32,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.example.mridanga.data.TempoState
 
 @Composable
 fun TaalDropDownComponent() {
@@ -128,7 +138,7 @@ fun PatternDropDownComponent() {
 fun TempoSliderComponent(){
     Card(modifier = Modifier
         .size(390.dp, 230.dp)
-        .padding(10.dp), colors = CardDefaults.cardColors(Color.White),
+        .padding(5.dp), colors = CardDefaults.cardColors(Color.White),
         elevation = CardDefaults.cardElevation(5.dp)
 
     ){
@@ -137,26 +147,50 @@ fun TempoSliderComponent(){
 }
 
 @Composable
-fun LiveTempoComponent(){
-    Card(modifier = Modifier
-        .size(390.dp, 300.dp)
-        .padding(10.dp), colors = CardDefaults.cardColors(Color.White),
-        elevation = CardDefaults.cardElevation(5.dp)
-
-    ){
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.TopCenter
+fun LiveTempoComponent(tempoState: TempoState, mediaPlayer: MediaPlayer) {
+    Box(
+        modifier = Modifier
+            .size(385.dp, 295.dp)
+            .padding(5.dp)
+            .background(Color.White)
+            .clip(RoundedCornerShape(15.dp))
+            .shadow(5.dp)
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            Spacer(modifier = Modifier.height(20.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                TempoButtonComponent("-30", tempoState, mediaPlayer, -30)
+                Spacer(modifier = Modifier.width(10.dp))
+                TempoButtonComponent("-15", tempoState, mediaPlayer, -15)
+                Spacer(modifier = Modifier.width(10.dp))
+                TempoButtonComponent("+15", tempoState, mediaPlayer, +30)
+                Spacer(modifier = Modifier.width(10.dp))
+                TempoButtonComponent("+30", tempoState, mediaPlayer, +15)
+            }
+
             SpeedDonut(
                 percent1 = 0.5f,
                 percent2 = 0.6f,
-                strokeWidth = 20.dp,
+                strokeWidth = 15.dp,
                 color1 = Color.Cyan,
                 color2 = Color.Blue
             )
         }
     }
 }
+
+fun updateTempoAndPlaybackSpeed(tempo: Int, mediaPlayer: MediaPlayer) {
+    val playbackParams = PlaybackParams()
+    playbackParams.speed = 1.0f + tempo / 100.0f
+    mediaPlayer.playbackParams = playbackParams
+}
+
+
+
 
 
